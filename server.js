@@ -85,11 +85,16 @@ const { PORT = 3000, MONGODB_URL } = process.env;
 const express = require("express");
 // create application object
 const app = express();
-// import mongoose
-const mongoose = require("mongoose");
+// // import mongoose
+// const mongoose = require("mongoose");
 // import middlware
 const cors = require("cors");
 const morgan = require("morgan");
+// IMPORT ROUTER
+const IndexRouter = require("./Routes/index");
+//MONGO CONNECTION
+const mongoose = require("./db/connection");
+
 
 ///////////////////////////////
 // DATABASE CONNECTION
@@ -108,14 +113,14 @@ mongoose.connection
 ///////////////////////////////
 // MODELS
 ////////////////////////////////
-const CheeseSchema = new mongoose.Schema({
-  name: String,
-  origin: String,
-  image: String,
-  grade: Number,
-});
+// const CheeseSchema = new mongoose.Schema({
+//   name: String,
+//   origin: String,
+//   image: String,
+//   grade: Number,
+// });
 
-const Cheese = mongoose.model("Cheese", CheeseSchema);
+// const Cheese = mongoose.model("Cheese", CheeseSchema);
 
 ///////////////////////////////
 // MiddleWare
@@ -124,59 +129,13 @@ app.use(cors()); // to prevent cors errors, open access to all origins
 app.use(morgan("dev")); // logging
 app.use(express.json()); // parse json bodies
 
-///////////////////////////////
-// ROUTES
-////////////////////////////////
 // create a test route
 app.get("/", (req, res) => {
   res.send("hello world");
 });
 
-// PEOPLE INDEX ROUTE
-app.get("/cheese", async (req, res) => {
-  try {
-    // send all people
-    res.json(await Cheese.find({}));
-  } catch (error) {
-    //send error
-    res.status(400).json(error);
-  }
-});
-
-// PEOPLE CREATE ROUTE
-app.post("/cheese", async (req, res) => {
-  try {
-    // send all people
-    res.json(await Cheese.create(req.body));
-  } catch (error) {
-    //send error
-    res.status(400).json(error);
-  }
-});
-
-// PEOPLE UPDATE ROUTE
-app.put("/cheese/:id", async (req, res) => {
-  try {
-    // send all people
-    res.json(
-      await Cheese.findByIdAndUpdate(req.params.id, req.body, { new: true })
-    );
-  } catch (error) {
-    //send error
-    res.status(400).json(error);
-  }
-});
-
-// PEOPLE DELETE ROUTE
-app.delete("/cheese/:id", async (req, res) => {
-  try {
-    // send all people
-    res.json(await Cheese.findByIdAndRemove(req.params.id));
-  } catch (error) {
-    //send error
-    res.status(400).json(error);
-  }
-});
+//Index Router
+app.use("/cheese", IndexRouter);
 
 ///////////////////////////////
 // LISTENER
