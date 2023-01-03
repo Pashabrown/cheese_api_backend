@@ -1,4 +1,9 @@
-
+//creating a router object 
+//its like a mini "app" 
+//I can order its own list of things to do
+//anything you use has to exist in that file
+//you have to import it to that file
+//"./" always means same folder "../" means the folder above
 const router = require("express").Router();
 const Cheese = require("../Models/Cheese");
 

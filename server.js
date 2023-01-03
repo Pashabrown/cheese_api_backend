@@ -100,15 +100,15 @@ const mongoose = require("./db/connection");
 // DATABASE CONNECTION
 ////////////////////////////////
 // Establish Connection
-mongoose.connect(MONGODB_URL, {
-  useUnifiedTopology: true,
-  useNewUrlParser: true,
-});
-// Connection Events
-mongoose.connection
-  .on("open", () => console.log("Your are connected to mongoose"))
-  .on("close", () => console.log("Your are disconnected from mongoose"))
-  .on("error", (error) => console.log(error));
+// mongoose.connect(MONGODB_URL, {
+//   useUnifiedTopology: true,
+//   useNewUrlParser: true,
+// });
+// // Connection Events
+// mongoose.connection
+//   .on("open", () => console.log("Your are connected to mongoose"))
+//   .on("close", () => console.log("Your are disconnected from mongoose"))
+//   .on("error", (error) => console.log(error));
 
 ///////////////////////////////
 // MODELS
